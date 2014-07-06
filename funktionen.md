@@ -6,6 +6,12 @@ Bemerken Sie, dass die Notation `paket::befehl` genutz wird, um das Paket mit de
 
 # Umgang mit Daten
 
+## aggregate()
+*Aggregiert* Daten -- sehr nützlich für Zusammenfassungen, z.B. Mittelwerte über einen Faktor.
+```
+aggregate(dv~bedingung*proband, data=datensatz, FUN=mean) 
+```
+
 ## scale()
 Standardisiert eine Variable(Ergebnis: $z$-Wert)
 ```
@@ -16,6 +22,30 @@ Zentriert eine Variable
 ```
 scale(x, scale=FALSE)
 ```
+
+## as.factor() and factor()
+Wandelt ein Objekt in Faktor (kateogirische bzw. nominalskalierte Variable) um:
+```
+datensatz$spalte <- as.factor(datensatz$spalte)
+datensatz$spalte <- factor(datensatz$spalte)
+``` 
+`as.factor()` ändert die Kodierung der Faktorstufen bei einer bestehenden Variable nicht, während `factor()` eine erneute Kodierung macht. Bei bestehenden Faktoren, die durch `subset()` oder ähnliches Stufen verloren haben, macht das einen Unterschied! 
+
+## reshape2::dcast()
+Wandelt Daten aus dem Longformat in andere Formate um. Name kommt aus der Schmieden-Metapher: Longformat ist das "melted" (*geschmozelne*) Urformat, aus dem alle andere Format durch "casting" (*gießen*) hergestellt werden.
+
+## reshape2::melt()
+Umformatiert ins Longformat. Name kommt aus der Schmieden-Metapher: Longformat ist das "melted" (*geschmozelne*)  Urformat, aus dem alle andere Format durch "casting" (*gießen*) hergestellt werden. 
+```
+melt(datensatz, ..., na.rm=FALSE, value.name="value") 
+```
+
+## xtable::xtable()
+Ermöglicht das Formatieren von tabellarischem Output für LaTeX, HTML, usw. In RMarkdown ist die Block-Option `results='asis'` notwendig:
+
+    ```{r, results='asis'}
+    print(xtable(tabelle), type="html"), include.rownames=F) 
+    ```
   
 # Deskriptive Statistik 
 
