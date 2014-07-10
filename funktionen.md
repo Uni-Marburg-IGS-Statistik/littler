@@ -176,12 +176,12 @@ cor(x,y, method="kendall")
 
 ## t.test()
 
-Einstichproben t-Test ungerichtet
+Einstichproben $t$-Test ungerichtet
 ```
 t.test(AV,mu=...)
 ```
 
-Einstichproben t-Test gerichtet
+Einstichproben $t$-Test gerichtet
 ```
 t.test(AV,mu=…, alternative="greater")
 t.test(AV,mu=…,alternative="less")
@@ -194,7 +194,7 @@ t.test(AV~UV, var.equal=TRUE, alternative="greater")
 t.test(AV~UV, var.equal=TRUE, alternative="less")
 ```
 
-Zwei unabhängige Stichproben bei Varianzheterogenität
+Zwei unabhängige Stichproben bei Varianzheterogenität (Welch $t$-Test)
 ```
 t.test(AV~UV)
 t.test(AV~UV, alternative="less")
@@ -213,6 +213,11 @@ t.test(V1, V2, paired=TRUE, alternative="less")
 ## car::leveneTest()
 
 ## shapiro.test()
+Berechnet den Shapiro–Wilk-Test.
+```
+shapiro.test(x)
+shapiro.test(rt[rt$subj==f, "RT"]) 
+```
 
 ## aov()
 Einfaktorielle Varianzanalyse ohne Messwiederholung (Varianzen homogen)
@@ -231,7 +236,11 @@ aov(AV~UV1*UV2)
 ## ez::ezANOVA()
 Varianzanalyse mit Messwiederholung
 ```
-ezANOVA(data,dv=. ,wid=. ,within=. , between=. ) 
+ezANOVA(data,dv=.(AV)
+    ,wid=.(within-ID)
+    ,within=.(UV)
+    ,between=.(UV)
+    ,detailed=TRUE) 
 ```
 
 ## ez::ezSummary()
