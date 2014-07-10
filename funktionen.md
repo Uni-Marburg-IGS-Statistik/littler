@@ -161,6 +161,38 @@ var(x)
 
 ## t.test()
 
+Einstichproben t-Test ungerichtet
+```
+t.test(AV,mu=...)
+```
+
+Einstichproben t-Test gerichtet
+```
+t.test(AV,mu=…, alternative="greater")
+t.test(AV,mu=…,alternative="less")
+```
+
+Zwei unabhängige Stichproben bei Varianzhomogenität
+```
+t.test(AV~UV, var.equal=TRUE)
+t.test(AV~UV, var.equal=TRUE, alternative="greater")
+t.test(AV~UV, var.equal=TRUE, alternative="less")
+```
+
+Zwei unabhängige Stichproben bei Varianzheterogenität
+```
+t.test(AV~UV)
+t.test(AV~UV, alternative="less")
+t.test(AV~UV, alternative="greater")
+```
+
+Zwei abhängige Stichproben
+```
+t.test(V1, V2, paired=TRUE)
+t.test(V1, V2, paired=TRUE, alternative="greater") 
+t.test(V1, V2, paired=TRUE, alternative="less") 
+```
+
 ## var.test()
 
 ## car::leveneTest()
@@ -168,18 +200,60 @@ var(x)
 ## shapiro.test()
 
 ## aov()
+Einfaktorielle Varianzanalyse ohne Messwiederholung (Varianzen homogen)
+```
+aov(AV~UV)
+```
+Mehrfaktorielle Varianzanalyse ohne Messwiederholung (Varianzen homogen)
+
+```
+# ohne Interaktionen
+aov(AV~UV1+UV2)
+# mit Interaktionen 
+aov(AV~UV1*UV2) 
+```
 
 ## ez::ezANOVA()
+Varianzanalyse mit Messwiederholung
+```
+ezANOVA(data,dv=. ,wid=. ,within=. , between=. ) 
+```
 
 ## ez::ezSummary()
 
 ## lm()
+Lineare Regression
+```
+lm(AV~UV) 
+```
 
+Multiple Regression
+```
+lm(AV~UV1+UV2) 
+```
 ## confint()
 
 ## anova()
+Modellvergleich (verschachtelte Modelle)
+```
+anova(modell1, modell2)
+```
 
 ## cor.test()
+Korrelation (Pearson)
+```
+cor.test(V1,V2)
+```
+
+Rangkorrelation (Spearman)
+```
+cor.test(V1,V2,method="spearman") 
+```
+
+Rangkorrelation (Kendall)
+```
+cor.test(V1,V2,method="kendall") 
+```
 
 ## lme4::lmer()
 
