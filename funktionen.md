@@ -130,6 +130,21 @@ var(x)
 ```
 
 ## cor()
+Berechnet den Korrelationskoeffizienten (per default Pearsons $r$).
+```
+cor(x,y)
+```
+
+Weitere Möglichkeiten sind Spearmans Rho ($\rho$)
+```
+cor(x,y, method="spearman")
+```
+
+und Kendalls Tau ($\tau$)
+```
+cor(x,y, method="kendall")
+```
+
 
 ## cov()
 
@@ -240,6 +255,8 @@ anova(modell1, modell2)
 ```
 
 ## cor.test()
+Signifikanztest für Korrelationen. Zeigt auch das Konfidenzintervall an. 
+
 Korrelation (Pearson)
 ```
 cor.test(V1,V2)
@@ -256,6 +273,29 @@ cor.test(V1,V2,method="kendall")
 ```
 
 ## lme4::lmer()
+Berechnet ein gemischtes Modell.
+
+Nur Intercepts nach RE
+```
+Modell <- lmer(AV ~ FE + (1|RE),data=x) 
+```
+
+Nur Anstieg nach RE
+```
+Modell <- lmer(AV ~ FE + (0 + FE|RE),data=x) 
+```
+
+Intercept und Anstieg nach RE
+```
+Modell <- lmer(AV ~ FE + (1 + FE|RE),data=x) 
+```
+
+Intercept und Anstieg, getrennt, nach RE
+```
+Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE),data=x) 
+```
+
+
 
 ## chisq.test()
 
