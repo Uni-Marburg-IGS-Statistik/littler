@@ -8,27 +8,32 @@ Bemerken Sie, dass die Notation `paket::befehl` genutz wird, um das Paket mit de
 
 ## aggregate()
 *Aggregiert* Daten -- sehr nützlich für Zusammenfassungen, z.B. Mittelwerte über einen Faktor.
+
 ```
 aggregate(dv~bedingung*proband, data=datensatz, FUN=mean) 
 ```
 
 ## scale()
 Standardisiert eine Variable(Ergebnis: $z$-Wert)
+
 ```
 scale(x)
 ```
 
 Zentriert eine Variable
+
 ```
 scale(x, scale=FALSE)
 ```
 
 ## as.factor() and factor()
 Wandelt ein Objekt in Faktor (kateogirische bzw. nominalskalierte Variable) um:
+
 ```
 datensatz$spalte <- as.factor(datensatz$spalte)
 datensatz$spalte <- factor(datensatz$spalte)
 ``` 
+
 `as.factor()` ändert die Kodierung der Faktorstufen bei einer bestehenden Variable nicht, während `factor()` eine erneute Kodierung macht. Bei bestehenden Faktoren, die durch `subset()` oder ähnliches Stufen verloren haben, macht das einen Unterschied! 
 
 ## reshape2::dcast()
@@ -36,6 +41,7 @@ Wandelt Daten aus dem Longformat in andere Formate um. Name kommt aus der Schmie
 
 ## reshape2::melt()
 Umformatiert ins Longformat. Name kommt aus der Schmieden-Metapher: Longformat ist das "melted" (*geschmozelne*)  Urformat, aus dem alle andere Format durch "casting" (*gießen*) hergestellt werden. 
+
 ```
 melt(datensatz, ..., na.rm=FALSE, value.name="value") 
 ```
@@ -51,16 +57,19 @@ Ermöglicht das Formatieren von tabellarischem Output für LaTeX, HTML, usw. In 
 
 ## table()
 Erstellt eine Häufigkeitstabelle für eine Variable, in der die absoluten Häufigkeiten aufgelistet werden
+
 ```
 table(x)
 ```
 
 ## prop.table()
 *proportions* table, gibt die relativen Häufigkeiten einer Häufigkeitstabelle wieder
+
 ```
 prop.table(tabelle)
 ```
 Durch das Multiplizieren mit 100 werden die relativen Häufigkeiten in Prozent umgewandelt
+
 ```
 100*prop.table(tabelle)
 ```
@@ -68,79 +77,95 @@ Durch das Multiplizieren mit 100 werden die relativen Häufigkeiten in Prozent u
 ## max()
 
 Gibt den höchsten Wert in einem Objekt an
+
 ```
 max(x)
 ```
 
 ## min()
 Gibt den niedrigsten Wert in einem Objekt an
+
 ```
 min(x)
 ```
 
 ## sum()
 Gibt die Summe aller in einem Objekt enthaltenen Werte an
+
 ```
 sum(x)
 ```
 
 ## median()
 Gibt den Median aller Werte in einem Objekt an
+
 ```
 median(x)
 ```
 
 ## mean()
 Gibt das arithmetische Mittel aller Werte in einem Objekt an
+
 ```
 mean(x)
 ```
 
 ## range()
 Gibt den Wertebereich eines Objektes an
+
 ```
 range(x)
 ```
 
 ## diff()
 Berechnet die Differenz mehrere Objekte
+
 ```
 diff(x)
 ```
 
 Besonders nützlich mit `range(x)`
+
 ```
 diff(range(x))
 ```
 
 ## quantile()
 Gibt Minimum, Maximum sowie die drei Quartile eines Vektors an
+
 ```
 quantile(x)
 ```
+
 ## sd()
 Gibt die Standardabweichung aller werte in einem Objekt an. Wird mit Bessels Korrektur berechnet, d.h. mit $n-1$ im Nenner, sodass man die den Populationswert aus einer Stichprobe schätzt.
+
 ```
 sd(x)
 ```
+
 ## var()
 Gibt die Varianz aller Werte in einem Objekt an. Wird mit Bessels Korrektur berechnet, d.h. mit $n-1$ im Nenner, sodass man die den Populationswert aus einer Stichprobe schätzt.
+
 ```
 var(x)
 ```
 
 ## cor()
 Berechnet den Korrelationskoeffizienten (per default Pearsons $r$).
+
 ```
 cor(x,y)
 ```
 
 Weitere Möglichkeiten sind Spearmans Rho ($\rho$)
+
 ```
 cor(x,y, method="spearman")
 ```
 
 und Kendalls Tau ($\tau$)
+
 ```
 cor(x,y, method="kendall")
 ```
@@ -177,17 +202,20 @@ cor(x,y, method="kendall")
 ## t.test()
 
 Einstichproben $t$-Test ungerichtet
+
 ```
 t.test(AV,mu=...)
 ```
 
 Einstichproben $t$-Test gerichtet
+
 ```
 t.test(AV,mu=…, alternative="greater")
 t.test(AV,mu=…,alternative="less")
 ```
 
 Zwei unabhängige Stichproben bei Varianzhomogenität
+
 ```
 t.test(AV~UV, var.equal=TRUE)
 t.test(AV~UV, var.equal=TRUE, alternative="greater")
@@ -195,6 +223,7 @@ t.test(AV~UV, var.equal=TRUE, alternative="less")
 ```
 
 Zwei unabhängige Stichproben bei Varianzheterogenität (Welch $t$-Test)
+
 ```
 t.test(AV~UV)
 t.test(AV~UV, alternative="less")
@@ -202,6 +231,7 @@ t.test(AV~UV, alternative="greater")
 ```
 
 Zwei abhängige Stichproben
+
 ```
 t.test(V1, V2, paired=TRUE)
 t.test(V1, V2, paired=TRUE, alternative="greater") 
@@ -214,6 +244,7 @@ t.test(V1, V2, paired=TRUE, alternative="less")
 
 ## shapiro.test()
 Berechnet den Shapiro–Wilk-Test.
+
 ```
 shapiro.test(x)
 shapiro.test(rt[rt$subj==f, "RT"]) 
@@ -221,6 +252,7 @@ shapiro.test(rt[rt$subj==f, "RT"])
 
 ## aov()
 Einfaktorielle Varianzanalyse ohne Messwiederholung (Varianzen homogen)
+
 ```
 aov(AV~UV)
 ```
@@ -235,6 +267,7 @@ aov(AV~UV1*UV2)
 
 ## ez::ezANOVA()
 Varianzanalyse mit Messwiederholung
+
 ```
 ezANOVA(data,dv=.(AV)
     ,wid=.(within-ID)
@@ -247,11 +280,13 @@ ezANOVA(data,dv=.(AV)
 
 ## lm()
 Lineare Regression
+
 ```
 lm(AV~UV) 
 ```
 
 Multiple Regression
+
 ```
 lm(AV~UV1+UV2) 
 ```
@@ -259,6 +294,7 @@ lm(AV~UV1+UV2)
 
 ## anova()
 Modellvergleich (verschachtelte Modelle)
+
 ```
 anova(modell1, modell2)
 ```
@@ -267,16 +303,19 @@ anova(modell1, modell2)
 Signifikanztest für Korrelationen. Zeigt auch das Konfidenzintervall an. 
 
 Korrelation (Pearson)
+
 ```
 cor.test(V1,V2)
 ```
 
 Rangkorrelation (Spearman)
+
 ```
 cor.test(V1,V2,method="spearman") 
 ```
 
 Rangkorrelation (Kendall)
+
 ```
 cor.test(V1,V2,method="kendall") 
 ```
@@ -285,21 +324,25 @@ cor.test(V1,V2,method="kendall")
 Berechnet ein gemischtes Modell.
 
 Nur Intercepts nach RE
+
 ```
 Modell <- lmer(AV ~ FE + (1|RE),data=x) 
 ```
 
 Nur Anstieg nach RE
+
 ```
 Modell <- lmer(AV ~ FE + (0 + FE|RE),data=x) 
 ```
 
 Intercept und Anstieg nach RE
+
 ```
 Modell <- lmer(AV ~ FE + (1 + FE|RE),data=x) 
 ```
 
 Intercept und Anstieg, getrennt, nach RE
+
 ```
 Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE),data=x) 
 ```
