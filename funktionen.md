@@ -10,7 +10,7 @@ Bemerken Sie, dass die Notation `paket::befehl` genutz wird, um das Paket mit de
 *Aggregiert* Daten -- sehr nützlich für Zusammenfassungen, z.B. Mittelwerte über einen Faktor.
 
 ```
-aggregate(dv~bedingung*proband, data=datensatz, FUN=mean) 
+aggregate(dv ~ bedingung * proband, data=datensatz, FUN=mean) 
 ```
 
 ## scale()
@@ -210,8 +210,8 @@ t.test(AV,mu=...)
 Einstichproben $t$-Test gerichtet
 
 ```
-t.test(AV,mu=…, alternative="greater")
-t.test(AV,mu=…,alternative="less")
+t.test(AV,mu=..., alternative="greater")
+t.test(AV,mu=..., alternative="less")
 ```
 
 Zwei unabhängige Stichproben bei Varianzhomogenität
@@ -254,25 +254,26 @@ shapiro.test(rt[rt$subj==f, "RT"])
 Einfaktorielle Varianzanalyse ohne Messwiederholung (Varianzen homogen)
 
 ```
-aov(AV~UV)
+aov(AV ~ UV)
 ```
 Mehrfaktorielle Varianzanalyse ohne Messwiederholung (Varianzen homogen)
 
 ```
 # ohne Interaktionen
-aov(AV~UV1+UV2)
+aov(AV ~ UV1 + UV2)
 # mit Interaktionen 
-aov(AV~UV1*UV2) 
+aov(AV ~ UV1 * UV2) 
 ```
 
 ## ez::ezANOVA()
 Varianzanalyse mit Messwiederholung
 
 ```
-ezANOVA(data,dv=.(AV)
+ezANOVA(data
+    ,dv=.(AV)
     ,wid=.(within-ID)
-    ,within=.(UV)
-    ,between=.(UV)
+    ,within=.(UV.innerhalb.Probanden)
+    ,between=.(UV.zwischen.Probanden)
     ,detailed=TRUE) 
 ```
 
@@ -282,13 +283,13 @@ ezANOVA(data,dv=.(AV)
 Lineare Regression
 
 ```
-lm(AV~UV) 
+lm(AV ~ UV) 
 ```
 
 Multiple Regression
 
 ```
-lm(AV~UV1+UV2) 
+lm(AV ~ UV1 + UV2) 
 ```
 ## confint()
 
@@ -326,25 +327,25 @@ Berechnet ein gemischtes Modell.
 Nur Intercepts nach RE
 
 ```
-Modell <- lmer(AV ~ FE + (1|RE),data=x) 
+Modell <- lmer(AV ~ FE + (1|RE), data=x) 
 ```
 
 Nur Anstieg nach RE
 
 ```
-Modell <- lmer(AV ~ FE + (0 + FE|RE),data=x) 
+Modell <- lmer(AV ~ FE + (0 + FE|RE), data=x) 
 ```
 
 Intercept und Anstieg nach RE
 
 ```
-Modell <- lmer(AV ~ FE + (1 + FE|RE),data=x) 
+Modell <- lmer(AV ~ FE + (1 + FE|RE), data=x) 
 ```
 
 Intercept und Anstieg, getrennt, nach RE
 
 ```
-Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE),data=x) 
+Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE), data=x) 
 ```
 
 
