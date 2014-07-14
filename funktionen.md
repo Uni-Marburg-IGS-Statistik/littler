@@ -13,8 +13,14 @@ Bemerken Sie, dass die Notation `paket::befehl` genutz wird, um das Paket mit de
 aggregate(dv ~ bedingung * proband, data=datensatz, FUN=mean) 
 ```
 
+Daten in tabellarischer Form nach bestimmter Funktion (z.B. `sd`, `var`, `mean`, `sum`) listen. Anwendung d. Funktion auf `Variable1` und Listung nach `Variable2` & `Variable3`.
+
+```
+aggregate(variable1 ~ variable2 + variable3, data=data, FUN=function)
+aggregate(Lex_Dec ~ Aphasie + Geschlecht, data = aphasiker, FUN=mean)
+```
 ## scale()
-Standardisiert eine Variable(Ergebnis: $z$-Wert)
+Standardisiert eine Variable (Ergebnis: $z$-Wert)
 
 ```
 scale(x)
@@ -26,6 +32,16 @@ Zentriert eine Variable
 scale(x, scale=FALSE)
 ```
 
+Bei `center=FALSE` und `scale=TRUE`, Skalierungsparameter = nicht mehr Standardabweichung.
+
+## head(), tail()
+Ersten (`head()`) oder letzten (`tail()`) Elemente  aus Datensatz anzeigen lassen. `n = number` (number durch Zahl ersetzen) wieviele Elemente angezeigt werden sollen.
+
+```
+head(daten, n=number)
+tail(daten, n=number)
+```
+
 ## as.factor() and factor()
 Wandelt ein Objekt in Faktor (kateogirische bzw. nominalskalierte Variable) um:
 
@@ -35,6 +51,26 @@ datensatz$spalte <- factor(datensatz$spalte)
 ``` 
 
 `as.factor()` ändert die Kodierung der Faktorstufen bei einer bestehenden Variable nicht, während `factor()` eine erneute Kodierung macht. Bei bestehenden Faktoren, die durch `subset()` oder ähnliches Stufen verloren haben, macht das einen Unterschied! 
+
+## length() 
+Wieviel Elemente ein Vektor enthält.
+
+```
+length(vektor)
+```
+
+## sort()
+Elemente eines Vektors sortieren (p. default: `decreasing=FALSE`)
+
+```
+sort(daten)
+```
+
+f. tabellarische Darstellung
+
+```
+sort(table(daten))
+```
 
 ## Subsetting
 
@@ -84,6 +120,8 @@ Ermöglicht das Formatieren von tabellarischem Output für LaTeX, HTML, usw. In 
 # Deskriptive Statistik 
 
 ## xtabs()
+Erstellt Kreuztabelle (Tabelle für Kombinationen bestimmter Merkmalsausprägungen).
+
 
 ```
 tabelle <-xtabs(Freq ~ Sex + Survived,passengers)
@@ -207,6 +245,12 @@ cor(x,y, method="kendall")
 
 
 ## cov()
+Gibt Kovarianz aus.
+
+```
+cov(x,y)
+```
+
 
 # Verteilungen
 
@@ -289,7 +333,27 @@ t.test(V1, V2, paired=TRUE, alternative="less")
 
 ## var.test()
 
+$F$-Test
+
+Vektorsyntax
+
+```
+var.test(gruppe1, gruppe2) 
+``` 
+
+Formelsyntax
+
+```
+var.test(messwert ~ gruppierungswert) 
+``` 
+
 ## car::leveneTest()
+Führt Levenes Test aus. Nur Formelsyntax funktioniert. (Vektorsyntax funtkioniert nicht!) 
+
+```
+levene.test(gruppe1 ~ gruppe2)
+levene.test(gruppe1 ~ gruppe2 * gruppe3)
+```
 
 ## shapiro.test()
 Berechnet den Shapiro–Wilk-Test.
@@ -340,7 +404,13 @@ Multiple Regression
 ```
 lm(AV ~ UV1 + UV2) 
 ```
+
 ## confint()
+gibt Konfidenzintervall aus z.B. für Regressionsgewicht
+
+```
+confint(lm(...))
+```
 
 ## anova()
 Modellvergleich (verschachtelte Modelle)
@@ -397,20 +467,31 @@ Intercept und Anstieg, getrennt, nach RE
 Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE), data=x) 
 ```
 
-
-
 ## chisq.test()
-$\chi^2$-Test:
+$\chi^2$-Test
 
 ```
 chisq.test(tabelle,correct=F)
 ````
 
-$\chi^2$-Test mit Yates Korrektur:
+$\chi^2$-Test mit Yates Korrektur
 
 ```
 chisq.test(tabelle)
 ````
+
+Erwartungswerte
+
+```
+chisq.test(tabelle)$expected
+````
+
+## fisher.test()
+Exakter Test nach Fisher. Gitb auch Konfidenzintervalle aus; nur für kleinere Tabellen!
+
+```
+fisher.test(tabelle)
+```
 
 # Grafiken
 ## base
@@ -420,6 +501,14 @@ chisq.test(tabelle)
 ## ggplot2
 
 ### qplot()
+Quick Plot. 
+
+```
+qplot(x=x-Achse, y=y-Achse, daten, geom="form")
+```
+
+Mögliche Formen sind u.a. `boxplot`, `density`, `histogram`, `bar`, `violin`.
+
 
 ### ggplot()
 
@@ -466,16 +555,28 @@ ggplot(data)+ geom_density(aes(x=RT,color=cond,fill=cond), alpha=0.1) + facet_wr
 
 ### geom_boxplot()
 
-Bsp.mit einer Gruppe:```weight.bw <- ggplot(data) + geom_boxplot(aes(x=I("x"),y=weight)) 
+Bsp.mit einer Gruppe:
+
+```
+weight.bw <- ggplot(data) + geom_boxplot(aes(x=I("x"),y=weight)) 
 print(weight.bw)
 ```
 
-Wenn man es nach target/subject aufgeteilt haben will: `+ facet_wrap(~target)` bzw. + `facet_wrap(~subject)`Bsp. mit 2 Gruppen:
-```weight.bw.sex <- ggplot(data) + geom_boxplot(aes(x=sex,y=weight)) print(weight.bw.sex)
+Wenn man es nach target/subject aufgeteilt haben will: `+ facet_wrap(~target)` bzw. + `facet_wrap(~subject)`
+
+
+Bsp. mit 2 Gruppen:
+
+```
+weight.bw.sex <- ggplot(data) + geom_boxplot(aes(x=sex,y=weight)) print(weight.bw.sex)
 ```
 
 ### facet_wrap()
-Teilt nach dem genannten Faktor auf.
+Teilt die Grafik nach dem genannten Faktor auf bzw. verschiedene Darstellungen pro Stufe der Variable.
+
+```
+... + facet_wrap(~variable)
+```
 
 # Attributions
 Image adapted from <a href='//blog.revolutionanalytics.com/2010/11/acm-data-mining-camp-1.html'>Revolution Analytics Blog</a>.
