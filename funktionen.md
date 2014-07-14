@@ -405,6 +405,14 @@ ggplot(daten) + geom_density(x=AV, color=UV, fill=UV), alpha=0.5)
 
 ### geom_boxplot()
 
+Bsp.mit einer Gruppe:```weight.bw <- ggplot(data) + geom_boxplot(aes(x=I("x"),y=weight)) 
+print(weight.bw)
+```
+
+Wenn man es nach target/subject aufgeteilt haben will: `+ facet_wrap(~target)` bzw. + `facet_wrap(~subject)`Bsp. mit 2 Gruppen:
+```weight.bw.sex <- ggplot(data) + geom_boxplot(aes(x=sex,y=weight)) print(weight.bw.sex)
+```
+
 # Attributions
 Image adapted from <a href='//blog.revolutionanalytics.com/2010/11/acm-data-mining-camp-1.html'>Revolution Analytics Blog</a>.
 
