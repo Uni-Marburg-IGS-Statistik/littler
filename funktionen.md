@@ -350,6 +350,17 @@ Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE),data=x)
 
 
 ## chisq.test()
+$\chi^2$-Test:
+
+```
+chisq.test(tabelle,correct=F)
+````
+
+$\chi^2$-Test mit Yates Korrektur:
+
+```
+chisq.test(tabelle)
+````
 
 # Grafiken
 ## base
@@ -367,6 +378,11 @@ Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE),data=x)
 ### geom_point()
 
 ### geom_smooth()
+Lineare Regression Grafik:
+
+```
+ggplot(daten, aes(x=UV,y=AV)) + geom_point() + geom_smooth(method="lm") 
+```
 
 ### geom_bar()
 
@@ -379,6 +395,12 @@ Modell <- lmer(AV ~ FE + (1|RE) + (0 + FE|RE),data=x)
 ### geom_histogram()
 
 ### geom_density()
+
+Density Grafik
+
+```
+ggplot(daten) + geom_density(x=AV, color=UV, fill=UV), alpha=0.5) 
+```
 
 ### geom_boxplot()
 
