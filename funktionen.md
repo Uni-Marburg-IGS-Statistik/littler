@@ -36,6 +36,34 @@ datensatz$spalte <- factor(datensatz$spalte)
 
 `as.factor()` ändert die Kodierung der Faktorstufen bei einer bestehenden Variable nicht, während `factor()` eine erneute Kodierung macht. Bei bestehenden Faktoren, die durch `subset()` oder ähnliches Stufen verloren haben, macht das einen Unterschied! 
 
+## Subsetting
+
+Vektor erstellen:
+
+```
+Broca_LexDec <- aphasiker$Lex_Dec[aphasiker$Aphasie=="B"]
+```
+
+Teilmenge eines Datensatzes erstellen:
+
+Mit `[]`
+```
+AphasieBW <- aphasiker[aphasiker$Aphasie=="B" | aphasiker$Aphasie=="W",]
+```
+
+Das Komma (`,`) trennt die zu definierenden Zeilen und Spalten.
+Vor  dem Komma werden die Zeilen bestimmt, die ausgewählt werden sollen, 
+ nach dem Komma werden die Spalten bestimmt, die ausgewählt werden sollen. 
+
+Mit `subset()`:
+
+```
+AphasieBW <- subset(aphasiker, Aphasie=="B" | Aphasie=="W")
+```
+
+ `|` wird auf der Tastatur mit `Alt+GR <` erzeugt; es bedeutet "logisches oder" (wir wollen Broca- und Wernicke-Aphasiker, aber jeder Patient hat nur Broca- *oder* Wernicke-Aphasie). `&` bedeutet "logisches und"
+
+
 ## reshape2::dcast()
 Wandelt Daten aus dem Longformat in andere Formate um. Name kommt aus der Schmieden-Metapher: Longformat ist das "melted" (*geschmozelne*) Urformat, aus dem alle andere Format durch "casting" (*gießen*) hergestellt werden.
 
@@ -54,6 +82,13 @@ Ermöglicht das Formatieren von tabellarischem Output für LaTeX, HTML, usw. In 
     ```
   
 # Deskriptive Statistik 
+
+## xtabs()
+
+```
+tabelle <-xtabs(Freq ~ Sex + Survived,passengers)
+tabelle <-xtabs(~ major + sex, kurs) 
+```
 
 ## table()
 Erstellt eine Häufigkeitstabelle für eine Variable, in der die absoluten Häufigkeiten aufgelistet werden
@@ -230,6 +265,20 @@ t.test(AV~UV, alternative="less")
 t.test(AV~UV, alternative="greater")
 ```
 
+Beispiel mit der Syntax für zwei Vektoren
+
+```
+Broca_LexDec <- aphasiker$Lex_Dec[aphasiker$Aphasie=="B"] 
+Wernicke_LexDec <- aphasiker$Lex_Dec[aphasiker$Aphasie=="W"] 
+t.test(Broca_LexDec, Wernicke_LexDec)
+```
+Beispiel mit der Formelsyntax
+
+```
+AphasieBW <- aphasiker[aphasiker$Aphasie=="B" | aphasiker$Aphasie=="W",] 
+t.test(Lex_Dec ~ Aphasie)
+```
+
 Zwei abhängige Stichproben
 
 ```
@@ -377,9 +426,20 @@ chisq.test(tabelle)
 ### aes()
 
 ### geom_point()
+Plottet Einzelpunkte. 
+
+Pseudo 3D
+
+```
+ggplot(linreg, aes(x=x1,y=x2)) + geom_point(aes(size=y)) 
+```
+
+`size` bestimmt die Dicke des Punktes.
 
 ### geom_smooth()
-Lineare Regression Grafik:
+Fügt Regressionslinie ein.
+
+Lineare Regression Grafik
 
 ```
 ggplot(daten, aes(x=UV,y=AV)) + geom_point() + geom_smooth(method="lm") 
@@ -401,6 +461,7 @@ Density Grafik
 
 ```
 ggplot(daten) + geom_density(x=AV, color=UV, fill=UV), alpha=0.5) 
+ggplot(data)+ geom_density(aes(x=RT,color=cond,fill=cond), alpha=0.1) + facet_wrap(~item) 
 ```
 
 ### geom_boxplot()
@@ -411,7 +472,10 @@ print(weight.bw)
 
 Wenn man es nach target/subject aufgeteilt haben will: `+ facet_wrap(~target)` bzw. + `facet_wrap(~subject)`Bsp. mit 2 Gruppen:
 ```weight.bw.sex <- ggplot(data) + geom_boxplot(aes(x=sex,y=weight)) print(weight.bw.sex)
-```
+```
+
+### facet_wrap()
+Teilt nach dem genannten Faktor auf.
 
 # Attributions
 Image adapted from <a href='//blog.revolutionanalytics.com/2010/11/acm-data-mining-camp-1.html'>Revolution Analytics Blog</a>.
