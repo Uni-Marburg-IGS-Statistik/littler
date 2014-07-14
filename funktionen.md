@@ -406,7 +406,7 @@ lm(AV ~ UV1 + UV2)
 ```
 
 ## confint()
-gibt Konfidenzintervall aus z.B. für Regressionsgewicht
+Gibt Konfidenzintervall aus z.B. für Regressionsgewicht
 
 ```
 confint(lm(...))
@@ -472,19 +472,19 @@ $\chi^2$-Test
 
 ```
 chisq.test(tabelle,correct=F)
-````
+```
 
 $\chi^2$-Test mit Yates Korrektur
 
 ```
 chisq.test(tabelle)
-````
+```
 
 Erwartungswerte
 
 ```
 chisq.test(tabelle)$expected
-````
+```
 
 ## fisher.test()
 Exakter Test nach Fisher. Gitb auch Konfidenzintervalle aus; nur für kleinere Tabellen!
